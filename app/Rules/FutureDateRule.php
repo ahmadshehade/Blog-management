@@ -3,22 +3,28 @@
 namespace App\Rules;
 
 use Closure;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Carbon;
 
-class FutureDateRule implements ValidationRule
+class FutureDateRule implements Rule
 {
-    /**
-     * Run the validation rule.
-     *
-     * @param  \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
-     */
-    public function validate(string $attribute, mixed $value, Closure $fail): void
-    {
-        if ($value && !Carbon::parse($value)->isFuture()) {
-            $fail('The publish date must be in the future.');
 
+
+    /*************************************************************************************/
+    /**
+     * Summary of passes
+     * @param mixed $attribute
+     * @param mixed $value
+     * @return bool
+     */
+    public function passes($attribute,$value){
+        if ($value && Carbon::parse($value)->isFuture()){
+                return Carbon::parse($value)->isFuture();
+            }
         }
+    public function message(){
+      return "The publish date must be in the future.";
     }
 
 

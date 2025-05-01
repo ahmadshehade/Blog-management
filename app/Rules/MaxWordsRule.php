@@ -4,26 +4,34 @@ namespace App\Rules;
 
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
-
-class MaxWordsRule implements ValidationRule
+use Illuminate\Contracts\Validation\Rule;
+class MaxWordsRule implements Rule
 {
     protected $maxWords;
 
-    public function __construct( $maxWords )
-    {
+    public function __construct(int $maxWords){
         $this->maxWords = $maxWords;
     }
 
+
     /**
-     * Run the validation rule.
-     *
-     * @param \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * Summary of passes
+     * @param mixed $attribute
+     * @param mixed $value
+     * @return bool
      */
-    public function validate(string $attribute, mixed $value, Closure $fail): void
-    {
+    public function passes($attribute,$value){
+
         $wordCount = str_word_count(strip_tags($value));
         if($wordCount>$this->maxWords){
-            $fail("The {$attribute} must not contain more than {$this->maxWords} words. Current count: {$wordCount}.");
+            return false;
         }
+        return true;
     }
+
+    public function message()
+    {
+        return "The :attribute must not contain more than {$this->maxWords} words.";
+    }
+
 }

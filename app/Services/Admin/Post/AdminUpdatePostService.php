@@ -29,7 +29,7 @@ class AdminUpdatePostService implements AdminUpdatedPostInterface
                 'title' => $post->title,
                 'slug' => $post->slug,
                 'body' => $post->body,
-                'is_published' => $post->is_published==1?0:1,
+                'is_published' => $post->is_published===null?'-':$post->is_published,
                 'publish_date' => $post->publish_date===null?'-':$post->publish_date,
                 'meta_description' => $post->meta_description===null?'-':$post->meta_description,
                 'keywords'=>$post->keywords,

@@ -27,11 +27,13 @@ class PostRequest extends FormRequest
         if ($this->is_published) {
             $keywords = Str::words(strip_tags($this->meta_description), 15, '') . ' ' . $this->tags;
             $this->merge([
+                "title"=>Str::title(trim($this->title)),
                 "slug" => Str::slug($this->title),
                 "keywords" => $keywords,
             ]);
         } else {
             $this->merge([
+                "title"=>Str::title(trim($this->title)),
                 "slug" => Str::slug($this->title),
                 "keywords" => str::words(strip_tags($this->title), 7, ''),
             ]);
