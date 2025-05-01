@@ -9,19 +9,28 @@ use Illuminate\Validation\Rule;
 
 class UserRegisterRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * @return bool
      */
     public function authorize(): bool
     {
         return true;
     }
 
+
+
     /**
-     * Get the validation rules that apply to the request.
+     * Prepare the request data for validation.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * This method is responsible for taking the request data and
+     * preparing it for validation. In this case, we are combining
+     * the `firstname` and `lastname` fields into a single `name`
+     * field.
      */
+
     public function prepareForValidation(): void
     {
         $this->merge([
@@ -29,6 +38,12 @@ class UserRegisterRequest extends FormRequest
         ]);
     }
 
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, array<int, string>>
+     */
     public function rules(): array
     {
         return [
@@ -45,6 +60,14 @@ class UserRegisterRequest extends FormRequest
 
         ];
     }
+
+
+    /**
+     * Get custom error messages for validator errors.
+     *
+     * @return array<string, string> The array of custom error messages.
+     */
+
 
     public function messages(): array
     {
@@ -64,6 +87,14 @@ class UserRegisterRequest extends FormRequest
         ];
     }
 
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * This method is necessary when using the message helper with __().
+     *
+     * @return array<string, string> The array of custom attributes.
+     */
     public function attributes(): array
     {
         return [

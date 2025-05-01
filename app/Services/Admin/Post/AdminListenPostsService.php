@@ -8,6 +8,18 @@ use App\Models\Post;
 class AdminListenPostsService implements AdminListenPostsInterface
 {
 
+
+    /**
+     * @return array
+     */
+    /*
+     * Get All Posts
+     *
+     * This function is used to get all posts
+     *
+     * @return array data and message
+     */
+
     public function getAllPosts()
     {
         $posts=Post::all();
@@ -37,6 +49,18 @@ class AdminListenPostsService implements AdminListenPostsInterface
         ];
     }
 
+
+    /**
+     * @return array
+     */
+    /*
+     * Get My Posts
+     *
+     * This function is used to get all my posts
+     *
+     * @return array data and message
+     */
+
     public function getMyPosts()
     {
        $posts=Post::where('admin_id',auth('admin')->user()->id)->get();
@@ -65,6 +89,21 @@ class AdminListenPostsService implements AdminListenPostsInterface
             'message'=>$message,
         ];
     }
+
+
+    /**
+     * Retrieves a post by its ID.
+     *
+     * This function attempts to find a post in the database using the provided
+     * post ID. If the post is found, it returns an array containing the post's
+     * details such as user name, email, title, and other metadata. If the post
+     * is not found, it returns a message indicating that the post was not found.
+     *
+     * @param int $id The ID of the post to retrieve.
+     * @return array An array containing a success message and the post data,
+     *               or an error message and null data if the post is not found.
+     */
+
 
     public function getPost($id)
     {

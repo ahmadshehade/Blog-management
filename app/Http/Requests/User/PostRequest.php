@@ -13,13 +13,28 @@ use Illuminate\Validation\Rule;
 
 class PostRequest extends FormRequest
 {
+
+
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * @return bool
      */
+
     public function authorize(): bool
     {
         return auth('api')->check() || auth('admin')->check();
     }
+
+
+    /**
+     * Prepare the request data for validation.
+     *
+     * If the post is being published, it generates a slug and keywords based on the title and meta description.
+     * If the post is being drafted, it generates a slug and keywords based on the title.
+     *
+     * @return void
+     */
 
     public function prepareForValidation()
     {
@@ -75,6 +90,13 @@ class PostRequest extends FormRequest
     }
 
 
+
+    /**
+     * Custom validation error messages.
+     *
+     * @return array<string, string>
+     */
+
     public function messages()
     {
         return [
@@ -114,12 +136,29 @@ class PostRequest extends FormRequest
     }
 
 
+
+    /**
+     * Actions to perform after validation passes.
+     *
+     * @return string A message indicating successful validation.
+     */
+
+
     public function passedValidation()
     {
 
         return "Validation Passed";
     }
 
+
+    /**
+     * Handle a failed validation attempt.
+     *
+     * @param  \Illuminate\Contracts\Validation\Validator  $validator
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function failedValidation(Validator $validator)
     {
 
@@ -129,6 +168,15 @@ class PostRequest extends FormRequest
         ], 422));
     }
 
+
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * This method is necessary when using the message helper with __().
+     *
+     * @return array<string, string> The array of custom attributes.
+     */
 
     public function attributes()
     {

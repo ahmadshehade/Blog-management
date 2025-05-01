@@ -8,6 +8,13 @@ use App\Models\Post;
 class PostListenService implements  PostListenInterface
 {
 
+
+    /**
+     * Get all posts belong to the current user.
+     *
+     * @return array
+     */
+
     public function getPosts()
     {
         $posts=Post::where('user_id',auth('api')->user()->id)->get();
@@ -37,6 +44,13 @@ class PostListenService implements  PostListenInterface
         ];
     }
 
+
+    /**
+     * Get all posts.
+     *
+     * @return array
+     */
+
     public function getAllPosts()
     {
         $posts=Post::all();
@@ -65,6 +79,14 @@ class PostListenService implements  PostListenInterface
             'message'=>$message
         ];
     }
+
+
+    /**
+     * Get post by id.
+     *
+     * @param int $id
+     * @return array
+     */
 
     public function getPost($id)
     {

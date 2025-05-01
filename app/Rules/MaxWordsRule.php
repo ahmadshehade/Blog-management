@@ -14,12 +14,16 @@ class MaxWordsRule implements Rule
     }
 
 
+
+
     /**
-     * Summary of passes
-     * @param mixed $attribute
-     * @param mixed $value
+     * Check if the given attribute contains more than $this->maxWords words.
+     *
+     * @param string $attribute
+     * @param string $value
      * @return bool
      */
+
     public function passes($attribute,$value){
 
         $wordCount = str_word_count(strip_tags($value));
@@ -28,6 +32,14 @@ class MaxWordsRule implements Rule
         }
         return true;
     }
+
+
+    /**
+     * Get the validation error message.
+     *
+     * @return string The error message indicating the attribute exceeds the maximum word limit.
+     */
+
 
     public function message()
     {

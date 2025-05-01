@@ -16,6 +16,14 @@ class AdminLoginRequest extends FormRequest
     }
 
 
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, array<string>> The array of validation rules for the email and password fields.
+     */
+
+
     public function rules(): array
     {
         return [
@@ -23,6 +31,16 @@ class AdminLoginRequest extends FormRequest
             'password' => ['required', 'min:8', 'string'],
         ];
     }
+
+
+    /**
+     * Returns an array of error messages for the request.
+     *
+     * This method is called after validation has failed and
+     * the error messages have been generated.
+     *
+     * @return array<string, string> The array of validation error messages.
+     */
 
     public function messages()
     {

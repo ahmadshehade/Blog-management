@@ -8,27 +8,44 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminLoginService implements AdminLoginInterface
 {
+    /**
+     * Summary of login
+     * @param \App\Http\Requests\Auth\AdminLoginRequest $request
+     * @return string|array{data: string, message: null}
+     * */
 
     public function login($request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = [
+            'email' => $request->validated()['email'],
+            'password' => $request->validated()['password'],
+        ];
         $admin = Admin::where('email', $credentials['email'])->first();
         if (!$admin) {
-            return response()->json(['error' => 'Admin not found'], 404);
+            return [
+                'error'=>'admin not found',
+                'data'=>null
+            ];
         }
 
-        if ($admin && Hash::check($credentials['password'], $admin->password)) {
-            $token = $admin->createToken('admin_auth')->plainTextToken;
-
-            return $token;
-        }
+         if($token=auth('admin')->attempt($credentials)){
+             return $token;
+         }
         return false;
     }
+
+
+    /**
+     * Logout the admin
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
 
     public function logout($request)
     {
         $admin = auth('admin')->user();
-        $admin->currentAccessToken()->delete();
+        $admin->logout;
         return true;
     }
 }

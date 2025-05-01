@@ -8,6 +8,16 @@ use App\Models\Post;
 class PostDeleteService implements PostDeleteInterface
 {
 
+
+
+    /**
+     * Deletes a post by its ID and returns details of the deleted post.
+     *
+     * @param int $id The ID of the post to be deleted.
+     * @return array An array containing the details of the deleted post and a success message.
+     */
+
+
     public function deletePost($id)
     {
         $post = Post::find($id);

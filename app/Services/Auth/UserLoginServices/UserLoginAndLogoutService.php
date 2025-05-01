@@ -9,26 +9,40 @@ use Illuminate\Support\Facades\Validator;
 
 class UserLoginAndLogoutService implements UserLoginInterface
 {
-
+    /**
+     * Summary of login
+     * @param \App\Http\Requests\Auth\UserLoginRequest$request
+     * @return string|array{data: string, message: null}
+     */
     public function login($request)
     {
 
-        $credentials = $request->only('email', 'password');
-        $user = User::where('email', $credentials['email'])->first();
-        if ($user && Hash::check($credentials['password'], $user->password)) {
-            $token = $user->createToken('auth_token')->plainTextToken;
+        $credentials = [
+            'email' => $request->validated()['email'],
+            'password' => $request->validated()['password'],
+        ];
 
-            return $token;
+        $user = User::where('email', $credentials['email'])->first();
+        if (! $token = auth('api')->attempt($credentials)) {
+            return [
+                 'data'=>'cannot login',
+                 'message'=>null
+            ];
         }
-        return false;
+        return $token;
 
     }
 
+    /**
+     * /
+     * @param mixed $request
+     * @return bool
+     */
     public function logout($request)
     {
         $user = $request->user();
 
-        $user->currentAccessToken()->delete();
+        $user->logout;
 
         return true;
 

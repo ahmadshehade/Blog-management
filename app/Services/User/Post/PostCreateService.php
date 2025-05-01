@@ -9,6 +9,20 @@ use Illuminate\Support\Facades\DB;
 class PostCreateService implements PostCreateInterface
 {
 
+
+    /**
+     * Create a new post with the given request data.
+     *
+     * This function create a new post with the given request data and
+     * assign it to the user that make the request.
+     *
+     * @param \App\Http\Requests\User\PostRequest $request The input data for the post.
+     *
+     * @return array Return the data of the created post, and a message.
+     *
+     * @throws \Exception If there are any errors during the process.
+     */
+
     public function storePost($request)
     {
         try {

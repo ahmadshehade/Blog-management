@@ -12,17 +12,36 @@ class FutureDateRule implements Rule
 
 
     /*************************************************************************************/
+
+
     /**
-     * Summary of passes
-     * @param mixed $attribute
+     * Check if the given value is in the future.
+     *
+     * @param string $attribute
      * @param mixed $value
      * @return bool
      */
+
     public function passes($attribute,$value){
         if ($value && Carbon::parse($value)->isFuture()){
                 return Carbon::parse($value)->isFuture();
             }
         }
+
+    /**
+     * Get the validation error message.
+     *
+     * @return string
+     */
+
+
+
+    /**
+     * Get the validation error message.
+     *
+     * @return string
+     */
+
     public function message(){
       return "The publish date must be in the future.";
     }

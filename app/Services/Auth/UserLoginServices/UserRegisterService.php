@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Validator;
 class UserRegisterService implements UserRegisterInterface
 {
 
+    /**
+     * Summary of register
+     * @param  \App\Http\Requests\Auth\UserRegisterRequest $request
+     * @return string|array{data: string, message: null}
+     */
+
     public function register($request)
     {
 
@@ -27,7 +33,17 @@ class UserRegisterService implements UserRegisterInterface
             ]);
 
 
-            $token = $user->createToken('auth_token')->plainTextToken;
+            if(! $token=auth('api')->attempt([
+                "email"=>$validatedData['email'],
+               "password"=> $validatedData['password']
+                ])){
+                return [
+                    'message'=>'Error',
+                    'data'=>null,
+                ];
+
+            }
+
 
             DB::commit();
 

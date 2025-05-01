@@ -8,6 +8,16 @@ use App\Models\Post;
 class AdminDeletePostService implements  AdminDeletedPostInterface
 {
 
+
+    /**
+     * Deletes a post by its ID.
+     *
+     * @param int $id The ID of the post to be deleted.
+     * @return array An array containing a message and the data of the deleted post.
+     *               If the post is not found, returns a message indicating so and null data.
+     */
+
+
     public function deletePost($id)
     {
        $post=Post::find($id);

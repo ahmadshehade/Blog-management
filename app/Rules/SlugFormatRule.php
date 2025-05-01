@@ -18,19 +18,31 @@ class SlugFormatRule implements Rule
         //        }
         //    }
         #################################################################################
-    /**
-     * Summary of validate
-     * @param string $attribute
-     * @param mixed $value
-     * @param \Closure $fail
-     * @return bool
-     */
 
+
+
+
+
+    /**
+     * Determine if the given attribute value is a valid slug.
+     *
+     * @param string $attribute The name of the attribute being validated.
+     * @param mixed $value The value of the attribute to validate.
+     * @return bool True if the value is a valid slug, false otherwise.
+     */
 
 
     public function passes($attribute, $value)  {
         return preg_match("/^[a-z0-9-]+$/", $value);
     }
+
+
+    /**
+     * Get the validation error message for an invalid slug.
+     *
+     * @return string The error message indicating the slug format requirements.
+     */
+
 
     public function message(){
         return "The slug may only contain lowercase letters, numbers, and hyphens (-).";

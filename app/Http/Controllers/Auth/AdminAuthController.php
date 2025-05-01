@@ -12,10 +12,26 @@ class AdminAuthController extends Controller
 
     protected  $adminLogin;
 
+
+/**
+ * Constructor for AdminAuthController.
+ *
+ * @param AdminLoginInterface $adminLogin The admin login service interface implementation.
+ */
+
+
     public function __construct(AdminLoginInterface $adminLogin)
     {
         $this->adminLogin=$adminLogin;
     }
+
+
+    /**
+     * Admin login
+     *
+     * @param AdminLoginRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
 
     public function  login(AdminLoginRequest $request){
        try{
@@ -26,6 +42,14 @@ class AdminAuthController extends Controller
        }
 
     }
+
+
+    /**
+     * Logout the admin
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
 
     public function  logout(Request $request){
       try{

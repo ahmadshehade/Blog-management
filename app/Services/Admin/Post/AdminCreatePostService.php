@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\DB;
 class AdminCreatePostService implements AdminCreatePostInterface
 {
 
+
+    /**
+     * Make a new post with the given request
+     *
+     * @param \App\Http\Requests\User\PostRequest $request
+     * @return array
+     */
+
     public function makePost($request)
     {
         try {

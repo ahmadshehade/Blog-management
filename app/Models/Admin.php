@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Admin extends Authenticatable
+class Admin extends Authenticatable implements JWTSubject
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable,HasApiTokens;
@@ -47,8 +48,36 @@ class Admin extends Authenticatable
         ];
     }
 
+
+    /**
+     * Get the posts written by the admin.
+     */
+
+
     public function posts()
     {
         return $this->hasMany(Post::class,'admin_id','id');
+    }
+
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     */
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+
+    /**
+     * Get the custom claims that will be appended to the JWT payload.
+     *
+     * @return array<string, mixed>
+     */
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }
