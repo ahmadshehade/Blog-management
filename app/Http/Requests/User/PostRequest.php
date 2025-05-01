@@ -26,10 +26,10 @@ class PostRequest extends FormRequest
 
         if ($this->is_published) {
             $keywords = Str::words(strip_tags($this->meta_description), 15, '') . ' ' . $this->tags;
-               $this->merge([
-                   "slug" => Str::slug($this->title),
-                   "keywords" => $keywords,
-               ]);
+            $this->merge([
+                "slug" => Str::slug($this->title),
+                "keywords" => $keywords,
+            ]);
         } else {
             $this->merge([
                 "slug" => Str::slug($this->title),
@@ -64,10 +64,10 @@ class PostRequest extends FormRequest
             ],
             'body' => ['required', 'string', 'min:16'],
             'is_published' => ['boolean', 'in:0,1'],
-            'publish_date' => ['nullable', 'date', new FutureDateRule()],
-            'meta_description' => ['nullable', 'string', 'max:150'],
+            'publish_date' => ['required_if:is_published,1', 'date', new FutureDateRule()],
+            'meta_description' => ['required_if:is_published,1', 'string', 'max:150'],
             'keywords' => ['required', 'string', new MaxWordsRule(20)],
-            'tags' => ['nullable', 'string', 'max:50'],
+            'tags' => ['required_if:is_published,1', 'string', 'max:50'],
 
         ];
     }
@@ -93,19 +93,23 @@ class PostRequest extends FormRequest
             'is_published.boolean' => 'The publish status must be boolean.',
 
             'publish_date.date' => 'Publish date must be a valid date.',
+            'publish_date.required_if' => 'Publish date is required when the post is published.',
 
             'meta_description.string' => 'The meta description must be a string.',
             'meta_description.max' => 'The meta description must not exceed 150 characters.',
+            'meta_description.required_if' => 'Meta description is required when the post is published.',
 
             'tags.string' => 'The tags must be a string.',
             'tags.max' => 'The tags must not exceed 50 characters.',
+            'tags.required_if' => 'Tags are required when the post is published.',
 
             'keywords.required' => 'The keywords field is required when the post is published.',
             'keywords.string' => 'The keywords must be a string.',
             'keywords.max_words' => 'The keywords must not exceed 10 words.',
+
+
         ];
     }
-
 
 
     public function passedValidation()
