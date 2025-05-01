@@ -7,7 +7,7 @@ use App\Http\Controllers\User\PostController;
 Route::post('register/user', [UserAuthController::class, 'register']);
 Route::post('login/user', [UserAuthController::class, 'login']);
 
-Route::middleware('auth:sanctum')->post('logout/user', [UserAuthController::class, 'logout']);
+Route::middleware('auth:api')->post('logout/user', [UserAuthController::class, 'logout']);
 
 ################################################ Posts ######################################################
 
