@@ -9,14 +9,15 @@ class AdminDeletePostService implements  AdminDeletedPostInterface
 {
 
 
-    /**
-     * Deletes a post by its ID.
-     *
-     * @param int $id The ID of the post to be deleted.
-     * @return array An array containing a message and the data of the deleted post.
-     *               If the post is not found, returns a message indicating so and null data.
-     */
+   
 
+
+
+    /**
+     * Delete post by id
+     * @param int $id
+     * @return array
+     */
 
     public function deletePost($id)
     {
@@ -32,15 +33,21 @@ class AdminDeletePostService implements  AdminDeletedPostInterface
         $data = [
             'user' => $post->user?$post->user->name:$post->admin->name,
             'email' => $post->user?$post->user->email:$post->admin->email,
-            'id' => $post->id,
-            'title' => $post->title,
-            'slug' => $post->slug,
-            'body' => $post->body,
-            'is_published' => $post->is_published===null?'-':$post->is_published,
-            'publish_date' => $post->publish_date===null?'-':$post->publish_date,
-            'meta_description' => $post->meta_description===null?'-':$post->meta_description,
-            'keywords'=>$post->keywords,
-            'tags' => $post->tags===null?'-':$post->tags,
+            'id' => $post->id, 
+            'title' => $post->title,  
+            'slug' => $post->slug, 
+            'body' => $post->body, 
+            'is_published' => $post->is_published === null ? '-' : $post->is_published, 
+            'publish_date' => $post->publish_date === null ? '-' : $post->publish_date, 
+            'meta_description' => $post->meta_description === null ? '-' : $post->meta_description,  
+            'keywords' => $post->keywords, 
+            'tags' => $post->tags === null ? '-' : $post->tags, 
+            'status' => $post->status,
+            'category' => $post->category ? $post->category->name : '-', 
+            'is_featured' => $post->is_featured === null ? '-' : $post->is_featured,    
+            'is_scheduled' => $post->is_scheduled === null ? '-' : $post->is_scheduled, 
+            'editor_notes' => $post->editor_notes === null ? '-' : $post->editor_notes, 
+             'URL'=>$post->canonical_url===null?'-':$post->canonical_url,
         ];
 
         $message = 'Post Deleted successfully';

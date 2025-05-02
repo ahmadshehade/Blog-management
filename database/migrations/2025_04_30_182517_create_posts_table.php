@@ -17,13 +17,23 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->foreignId('admin_id')->nullable()->constrained('admins')
                 ->onDelete('cascade');
-            $table->string('title',255);
-            $table->string('slug');
+                $table->foreignId('category_id')->nullable()->constrained('categories')
+                ->nullOnDelete();
+             $table->string('title', 255)->unique();
+            $table->string('slug')->unique();
             $table->longText('body');
             $table->boolean('is_published')->default(0);
+            $table->boolean('is_featured')->default(0);
+            $table->boolean('is_scheduled')->default(0);
+            $table->enum('status',
+            ['draft', 'published', 'archived', 'pending_review'])
+            ->default('draft');
             $table->date('publish_date')->nullable();
-            $table->string('meta_description',255)->nullable();
-            $table->string('tags',255)->nullable();
+            $table->string('meta_description', 255)->nullable();
+            $table->string('keywords', 255)->nullable();
+            $table->string('tags', 255)->nullable();
+            $table->string(column: 'canonical_url')->nullable();
+            $table->text('editor_notes')->nullable();
             $table->timestamps();
         });
     }
@@ -35,4 +45,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('posts');
     }
+
 };

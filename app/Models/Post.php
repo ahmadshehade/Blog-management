@@ -7,14 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $fillable = [
+        'category_id',
         'title',
         'slug',
         'body',
         'is_published',
+        'is_featured',
+        'is_scheduled',
+        'status',
         'publish_date',
         'meta_description',
+        'keywords',
         'tags',
-        'keywords'
+        'canonical_url',
+        'editor_notes',
     ];
 
     protected  $guarded=['user_id','admin_id'];
@@ -31,6 +37,11 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class,'user_id','id');
+    }
+
+
+    public function category(){
+        return $this->belongsTo(Category::class,'category_id','id');
     }
 
 
