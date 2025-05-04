@@ -29,12 +29,6 @@ class PostRequest extends FormRequest
     }
 
 
-
- 
-
-
-
-
     /**
      * Prepare the data for validation.
      *
@@ -45,24 +39,23 @@ class PostRequest extends FormRequest
      */
 
 
-
     public function prepareForValidation()
     {
 
         if ($this->is_published) {
             $keywords = Str::words(strip_tags($this->meta_description), 15, '') . ' ' . $this->tags;
             $this->merge([
-                "title"=>Str::title(trim($this->title)),
+                "title" => Str::title(trim($this->title)),
                 "slug" => Str::slug($this->title),
                 "keywords" => $keywords,
-                "status"=>$this->status??'draft',
+                "status" => $this->status ?? 'draft',
             ]);
         } else {
             $this->merge([
-                "title"=>Str::title(trim($this->title)),
+                "title" => Str::title(trim($this->title)),
                 "slug" => Str::slug($this->title),
                 "keywords" => str::words(strip_tags($this->title), 7, ''),
-                "status"=>$this->status??'draft',
+                "status" => $this->status ?? 'draft',
             ]);
         }
 
@@ -101,18 +94,16 @@ class PostRequest extends FormRequest
             'meta_description' => ['required_if:is_published,1', 'string', 'max:255', new MaxWordsRule(10)],
             'keywords' => ['required', 'string', new MaxWordsRule(20)],
             'tags' => ['required_if:is_published,1', 'string', 'max:255'],
-            'canonical_url' => ['nullable', 'url',new CanonicalUrlRule()],
+            'canonical_url' => ['nullable', 'url', new CanonicalUrlRule()],
             'editor_notes' => [
-                  $this->route('id') ? 'required' : 'nullable',
-                 'string',
-                  new MaxWordsRule(30),
-                   new NoBannedWordsRule(['idiot', 'nonsense', 'invalid']),
-                      ],
+                $this->route('id') ? 'required' : 'nullable',
+                'string',
+                new MaxWordsRule(30),
+                new NoBannedWordsRule(['idiot', 'nonsense', 'invalid']),
+            ],
 
         ];
     }
-
-
 
 
     /**
@@ -121,57 +112,54 @@ class PostRequest extends FormRequest
      * @return array<string, string>
      */
 
-     public function messages(): array
-     {
-         return [
-             'title.required' => 'The post title is required.',
-             'title.string' => 'The post title must be a string.',
-             'title.max' => 'The post title may not be greater than 255 characters.',
-             'title.unique' => 'This post title has already been taken.',
-     
-             'slug.required' => 'The slug is required.',
-             'slug.string' => 'The slug must be a string.',
-             'slug.max' => 'The slug may not be greater than 255 characters.',
-             'slug.unique' => 'This slug has already been taken.',
-     
-             'body.required' => 'The post body is required.',
-             'body.string' => 'The post body must be a string.',
-             'body.min' => 'The post body must be at least 16 characters.',
-     
-             'category_id.exists' => 'The selected category does not exist.',
-     
-             'is_published.required' => 'The publish status is required.',
-             'is_published.boolean' => 'The publish status must be true or false (0 or 1).',
-             'is_published.in' => 'The selected publish status is invalid.',
-     
-             'is_featured.boolean' => 'The featured status must be true or false (0 or 1).',
-             'is_scheduled.boolean' => 'The scheduled status must be true or false (0 or 1).',
-     
-             'status.required' => 'The post status is required.',
-             'status.in' => 'The selected post status is invalid.',
-     
-             'publish_date.required_if' => 'The publish date is required when the post is marked as published.',
-             'publish_date.date' => 'The publish date must be a valid date.',
-     
-             'meta_description.required_if' => 'The meta description is required when the post is published.',
-             'meta_description.string' => 'The meta description must be a string.',
-             'meta_description.max' => 'The meta description may not be greater than 255 characters.',
-     
-             'keywords.required' => 'The keywords field is required.',
-             'keywords.string' => 'The keywords must be a string.',
-     
-             'tags.required_if' => 'The tags field is required when the post is published.',
-             'tags.string' => 'The tags must be a string.',
-             'tags.max' => 'The tags may not be greater than 255 characters.',
-     
-             'canonical_url.url' => 'The canonical URL must be a valid URL.',
-     
-             'editor_notes.string' => 'The editor notes must be a string.',
-         ];
-     }
-     
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'The post title is required.',
+            'title.string' => 'The post title must be a string.',
+            'title.max' => 'The post title may not be greater than 255 characters.',
+            'title.unique' => 'This post title has already been taken.',
 
+            'slug.required' => 'The slug is required.',
+            'slug.string' => 'The slug must be a string.',
+            'slug.max' => 'The slug may not be greater than 255 characters.',
+            'slug.unique' => 'This slug has already been taken.',
 
+            'body.required' => 'The post body is required.',
+            'body.string' => 'The post body must be a string.',
+            'body.min' => 'The post body must be at least 16 characters.',
+
+            'category_id.exists' => 'The selected category does not exist.',
+
+            'is_published.required' => 'The publish status is required.',
+            'is_published.boolean' => 'The publish status must be true or false (0 or 1).',
+            'is_published.in' => 'The selected publish status is invalid.',
+
+            'is_featured.boolean' => 'The featured status must be true or false (0 or 1).',
+            'is_scheduled.boolean' => 'The scheduled status must be true or false (0 or 1).',
+
+            'status.required' => 'The post status is required.',
+            'status.in' => 'The selected post status is invalid.',
+
+            'publish_date.required_if' => 'The publish date is required when the post is marked as published.',
+            'publish_date.date' => 'The publish date must be a valid date.',
+
+            'meta_description.required_if' => 'The meta description is required when the post is published.',
+            'meta_description.string' => 'The meta description must be a string.',
+            'meta_description.max' => 'The meta description may not be greater than 255 characters.',
+
+            'keywords.required' => 'The keywords field is required.',
+            'keywords.string' => 'The keywords must be a string.',
+
+            'tags.required_if' => 'The tags field is required when the post is published.',
+            'tags.string' => 'The tags must be a string.',
+            'tags.max' => 'The tags may not be greater than 255 characters.',
+
+            'canonical_url.url' => 'The canonical URL must be a valid URL.',
+
+            'editor_notes.string' => 'The editor notes must be a string.',
+        ];
+    }
 
 
     /**
@@ -191,7 +179,7 @@ class PostRequest extends FormRequest
     /**
      * Handle a failed validation attempt.
      *
-     * @param  \Illuminate\Contracts\Validation\Validator  $validator
+     * @param \Illuminate\Contracts\Validation\Validator $validator
      * @return void
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -206,7 +194,6 @@ class PostRequest extends FormRequest
     }
 
 
-
     /**
      * Get custom attributes for validator errors.
      *
@@ -215,25 +202,25 @@ class PostRequest extends FormRequest
      * @return array<string, string> The array of custom attributes.
      */
 
-     public function attributes()
-     {
-         return [
-             'title' => 'Title',
-             'slug' => 'Slug',
-             'body' => 'Body',
-             'category_id' => 'Category',
-             'is_published' => 'Publish Status',
-             'is_featured' => 'Featured Status',
-             'is_scheduled' => 'Scheduled Status',
-             'status' => 'Status',
-             'publish_date' => 'Publish Date',
-             'meta_description' => 'Meta Description',
-             'tags' => 'Tags',
-             'keywords' => 'Keywords',
-             'canonical_url' => 'Canonical URL',
-             'editor_notes' => 'Editor Notes',
-         ];
-     }
+    public function attributes()
+    {
+        return [
+            'title' => 'Title',
+            'slug' => 'Slug',
+            'body' => 'Body',
+            'category_id' => 'Category',
+            'is_published' => 'Publish Status',
+            'is_featured' => 'Featured Status',
+            'is_scheduled' => 'Scheduled Status',
+            'status' => 'Status',
+            'publish_date' => 'Publish Date',
+            'meta_description' => 'Meta Description',
+            'tags' => 'Tags',
+            'keywords' => 'Keywords',
+            'canonical_url' => 'Canonical URL',
+            'editor_notes' => 'Editor Notes',
+        ];
+    }
 
 
 }

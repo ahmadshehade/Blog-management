@@ -7,20 +7,17 @@ use Illuminate\Contracts\Validation\Rule;
 
 class SlugFormatRule implements Rule
 {
-           //###########################if use ValidationRule############################
+    //###########################if use ValidationRule############################
 
 
-        //    public function validate(string $attribute, mixed $value, Closure $fail): void
-        //    {
-        //        if (!preg_match('/^[a-z0-9-]+$/', $value)) {
-        //            $fail('The slug may only contain lowercase letters, numbers, and hyphens (-).');
+    //    public function validate(string $attribute, mixed $value, Closure $fail): void
+    //    {
+    //        if (!preg_match('/^[a-z0-9-]+$/', $value)) {
+    //            $fail('The slug may only contain lowercase letters, numbers, and hyphens (-).');
 
-        //        }
-        //    }
-        #################################################################################
-
-
-
+    //        }
+    //    }
+    #################################################################################
 
 
     /**
@@ -32,7 +29,8 @@ class SlugFormatRule implements Rule
      */
 
 
-    public function passes($attribute, $value)  {
+    public function passes($attribute, $value)
+    {
         return preg_match("/^[a-z0-9-]+$/", $value);
     }
 
@@ -44,7 +42,8 @@ class SlugFormatRule implements Rule
      */
 
 
-    public function message(){
+    public function message()
+    {
         return "The slug may only contain lowercase letters, numbers, and hyphens (-).";
     }
 

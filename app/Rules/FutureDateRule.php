@@ -22,18 +22,12 @@ class FutureDateRule implements Rule
      * @return bool
      */
 
-    public function passes($attribute,$value){
-        if ($value && Carbon::parse($value)->isFuture()){
-                return Carbon::parse($value)->isFuture();
-            }
+    public function passes($attribute, $value)
+    {
+        if ($value && Carbon::parse($value)->isFuture()) {
+            return Carbon::parse($value)->isFuture();
         }
-
-    /**
-     * Get the validation error message.
-     *
-     * @return string
-     */
-
+    }
 
 
     /**
@@ -42,8 +36,9 @@ class FutureDateRule implements Rule
      * @return string
      */
 
-    public function message(){
-      return "The publish date must be in the future.";
+    public function message()
+    {
+        return "The publish date must be in the future.";
     }
 
 

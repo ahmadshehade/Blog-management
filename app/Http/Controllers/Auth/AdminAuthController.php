@@ -60,4 +60,10 @@ class AdminAuthController extends Controller
           return  $this->errorMessage('someThink error'.$e->getMessage(),null,500);
       }
     }
+
+
+
+
+
+
 }

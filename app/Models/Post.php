@@ -23,9 +23,9 @@ class Post extends Model
         'editor_notes',
     ];
 
-    protected  $guarded=['user_id','admin_id'];
+    protected $guarded = ['user_id', 'admin_id'];
 
-    protected $table="posts";
+    protected $table = "posts";
 
 
     /**
@@ -36,15 +36,19 @@ class Post extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class,'user_id','id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+        /**
+     * Get the user that owns the Post
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
 
-    public function category(){
-        return $this->belongsTo(Category::class,'category_id','id');
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
-
-
 
 
     /**
@@ -54,6 +58,16 @@ class Post extends Model
      */
     public function admin()
     {
-        return $this->belongsTo(Admin::class,'admin_id','id');
+        return $this->belongsTo(Admin::class, 'admin_id', 'id');
+    }
+
+    /**
+     * Get all of the comments for the Post
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'post_id', 'id');
     }
 }

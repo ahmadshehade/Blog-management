@@ -19,12 +19,13 @@ class NoBannedWordsRule implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param string $attribute
+     * @param mixed $value
      * @return bool
      */
 
-    public function passes($attribute, $value){
+    public function passes($attribute, $value)
+    {
         foreach ($this->bannedWords as $word) {
             if (stripos($value, $word) !== false) {
                 return false;
@@ -34,7 +35,6 @@ class NoBannedWordsRule implements Rule
     }
 
 
-
     /**
      * Get the validation error message.
      *
@@ -42,7 +42,8 @@ class NoBannedWordsRule implements Rule
      */
 
 
-    public function message(){
+    public function message()
+    {
         return 'The :attribute contains prohibited language.';
     }
 }

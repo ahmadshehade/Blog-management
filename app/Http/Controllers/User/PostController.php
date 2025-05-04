@@ -54,7 +54,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = $this->postListen->getAllPosts();
-        return $this->successMessage($posts['message'], $posts['data'], 200);
+        return $this->successMessage($posts['message'], $posts['data'], $posts['code']);
     }
 
 
@@ -68,7 +68,7 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $post = $this->postCreate->storePost($request);
-        return $this->successMessage($post['message'], $post['data'], 201);
+        return $this->successMessage($post['message'], $post['data'], $post['code']);
     }
 
 
@@ -82,7 +82,7 @@ class PostController extends Controller
     public function show()
     {
         $posts = $this->postListen->getPosts();
-        return $this->successMessage($posts['message'], $posts['data'], 200);
+        return $this->successMessage($posts['message'], $posts['data'], $posts['code']);
     }
 
 
@@ -97,7 +97,7 @@ class PostController extends Controller
     public function update($id, PostRequest $request)
     {
         $post = $this->postUpdate->updatePost($id, $request);
-        return $this->successMessage($post['message'], $post['data'], 200);
+        return $this->successMessage($post['message'], $post['data'], $post['code']);
     }
 
 
@@ -112,7 +112,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         $deleted = $this->postDelete->deletePost($id);
-        return $this->successMessage($deleted['message'], $deleted['data'], 200);
+        return $this->successMessage($deleted['message'], $deleted['data'], $deleted['code']);
     }
 
     /**
@@ -126,6 +126,6 @@ class PostController extends Controller
     public function getPost($id)
     {
         $post = $this->postListen->getPost($id);
-        return $this->successMessage($post['message'], $post['data'], 200);
+        return $this->successMessage($post['message'], $post['data'], $post['code']);
     }
 }

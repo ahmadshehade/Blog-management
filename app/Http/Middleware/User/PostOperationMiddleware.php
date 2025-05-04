@@ -18,7 +18,7 @@ class PostOperationMiddleware
     {
         $post_id = $request->route('id');
         $post = Post::where('id', $post_id)->first();
-        if ($post->user->id == auth('api')->user()->id) {
+        if ( $post->user && $post->user->id == auth('api')->user()->id) {
             return $next($request);
         }
         return \response()->json([

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -17,17 +16,17 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->foreignId('admin_id')->nullable()->constrained('admins')
                 ->onDelete('cascade');
-                $table->foreignId('category_id')->nullable()->constrained('categories')
+            $table->foreignId('category_id')->nullable()->constrained('categories')
                 ->nullOnDelete();
-             $table->string('title', 255)->unique();
+            $table->string('title', 255)->unique();
             $table->string('slug')->unique();
             $table->longText('body');
             $table->boolean('is_published')->default(0);
             $table->boolean('is_featured')->default(0);
             $table->boolean('is_scheduled')->default(0);
             $table->enum('status',
-            ['draft', 'published', 'archived', 'pending_review'])
-            ->default('draft');
+                ['draft', 'published', 'archived', 'pending_review'])
+                ->default('draft');
             $table->date('publish_date')->nullable();
             $table->string('meta_description', 255)->nullable();
             $table->string('keywords', 255)->nullable();
