@@ -5,27 +5,23 @@ namespace App\Services\User\Comments;
 use App\Interfaces\User\Comments\UpdateCommentInterface;
 use App\Models\Comment;
 use App\Models\Post;
-
+use Illuminate\Support\Facades\DB;
 
 class UpdateCommentService implements UpdateCommentInterface{
 
 
-       /**
-     * Update an existing comment.
-     *
-     * @param  int  $id The ID of the comment to update.
-     * @param \App\Http\Requests\User\CommentRequest Request  $request The request object containing the validated data for the update.
-     * @return array An array containing a message and data about the updated comment, or an error message.
-     *               Returns ['message' => 'success', 'data' => [...]] on successful update.
-     *               Returns ['message' => 'Comment not found', 'data' => null] if the comment does not exist.
-     *               Returns ['message' => 'Comment not unauthorized', 'data' => null] if the authenticated user is not the comment owner.
-     * @throws \Exception If an unexpected error occurs during the update process.
+    /**
+     * Summary of update
+     * @param int $id
+     * @param \App\Http\Requests\User\CommentRequest $request
+     * @throws \Exception
+     * @return array{code: int, data: array{content: mixed, email: string, id: mixed, name: string, parent: mixed, title: mixed, message: string}|array{code: int, data: null, message: string}|array{data: null, message: string}}
      */
     public function update($id, $request)
     {
         try{
 
-
+           DB::beginTransaction();
            $comment=Comment::find($id);
 
             if (!$comment ) {
@@ -42,12 +38,10 @@ class UpdateCommentService implements UpdateCommentInterface{
                 ];
             }
             $dataUpadted=$request->validated();
-            if( $comment->parent_id!=null){
-                   $comment->update($dataUpadted);
-                   unset($dataUpadted['parent_id']);
-            }else{
-                $comment->update($dataUpadted);
+            if($comment->post_id!=$dataUpadted["post_id"]){
+              throw new \Exception("Error! post_id is not match");
             }
+            $comment->update($dataUpadted);
             $data=[
                 "name"=>auth('api')->user()->name,
                 "email"=>auth('api')->user()->email,
@@ -56,14 +50,18 @@ class UpdateCommentService implements UpdateCommentInterface{
                 : ($comment->parent && $comment->parent->post ?
                  $comment->parent->post->title : null),
                 "content"=>$comment->body,
+                'id' => $comment->id,
                 "parent"=>$comment->parent? $comment->parent->body:"*",
                ];
+               DB::commit();
             return [
                 "message"=>"success",
                 "data"=>$data,
-                'code'=> 200,
+                "code"=> 200,
+
             ];
         }catch(\Exception $e){
+            DB::rollBack();
             return [
                 "message"=>$e->getMessage(),
                 "data"=>null,

@@ -9,14 +9,12 @@ class PostDeleteService implements PostDeleteInterface
 {
 
 
+
     /**
-     * Deletes a post by its ID and returns details of the deleted post.
-     *
-     * @param int $id The ID of the post to be deleted.
-     * @return array An array containing the details of the deleted post and a success message.
+     * Summary of deletePost
+     * @param mixed $id
+     * @return array{code: int, data: array{URL: mixed, body: mixed, category: mixed, editor_notes: mixed, email: string, id: mixed, is_featured: mixed, is_published: mixed, is_scheduled: mixed, keywords: mixed, meta_description: mixed, publish_date: mixed, slug: mixed, status: mixed, tags: mixed, title: mixed, user: string, message: string}}
      */
-
-
     public function deletePost($id)
     {
         $post = Post::find($id);

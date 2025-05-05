@@ -8,11 +8,9 @@ use App\Models\Post;
 class AdminListenPostsService implements AdminListenPostsInterface
 {
 
-
     /**
-     * Get all posts
-     *
-     * @return array
+     * Summary of getAllPosts
+     * @return array{code: int, data: array, message: string|array{code: int, data: array{email: string, user: string}, message: string}}
      */
     public function getAllPosts()
     {
@@ -51,17 +49,11 @@ class AdminListenPostsService implements AdminListenPostsInterface
     }
 
 
-    /**
-     * @return array
-     */
-    /*
-     * Get My Posts
-     *
-     * This function is used to get all my posts
-     *
-     * @return array data and message
-     */
 
+    /**
+     * Summary of getMyPosts
+     * @return array{code: int, data: array, message: string|array{code: int, data: array{email: string, user: string}, message: string}}
+     */
     public function getMyPosts()
     {
         $posts = Post::where('admin_id', auth('admin')->user()->id)->get();
@@ -98,16 +90,12 @@ class AdminListenPostsService implements AdminListenPostsInterface
     }
 
 
-    /**
-     * Get a post by ID
-     *
-     * This function is used to get a post by ID
-     *
-     * @param int $id post ID
-     *
-     * @return array data and message
-     */
 
+    /**
+     * Summary of getPost
+     * @param mixed $id
+     * @return array{code: int, data: array{URL: mixed, body: mixed, category: mixed, editor_notes: mixed, email: mixed, id: mixed, is_featured: mixed, is_published: mixed, is_scheduled: mixed, keywords: mixed, meta_description: mixed, publish_date: mixed, slug: mixed, status: mixed, tags: mixed, title: mixed, user: mixed, message: string}|array{data: null, message: string}}
+     */
     public function getPost($id)
     {
         $post = Post::find($id);

@@ -10,11 +10,9 @@ class PostListenService implements PostListenInterface
 
 
     /**
-     * Get all posts belong to the current user.
-     *
-     * @return array
+     * Summary of getPosts
+     * @return array{code: int, data: array, message: string|array{code: int, data: array{email: string, user: string}, message: string}}
      */
-
     public function getPosts()
     {
         $posts = Post::where('user_id', auth('api')->user()->id)->get();
@@ -52,11 +50,9 @@ class PostListenService implements PostListenInterface
 
 
     /**
-     * Get all posts.
-     *
-     * @return array
+     * Summary of getAllPosts
+     * @return array{code: int, data: array, message: string|array{code: int, data: array{email: string, user: string}, message: string}}
      */
-
     public function getAllPosts()
     {
         $posts = Post::all();
@@ -94,13 +90,12 @@ class PostListenService implements PostListenInterface
     }
 
 
-    /**
-     * Get post by id.
-     *
-     * @param int $id
-     * @return array
-     */
 
+    /**
+     * Summary of getPost
+     * @param mixed $id
+     * @return array{code: int, data: array{URL: mixed, body: mixed, category: mixed, editor_notes: mixed, email: mixed, id: mixed, is_featured: mixed, is_published: mixed, is_scheduled: mixed, keywords: mixed, meta_description: mixed, publish_date: mixed, slug: mixed, status: mixed, tags: mixed, title: mixed, user: mixed, message: string}|array{data: null, message: string}}
+     */
     public function getPost($id)
     {
         $post = Post::find($id);

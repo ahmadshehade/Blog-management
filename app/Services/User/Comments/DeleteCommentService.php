@@ -8,14 +8,11 @@ use App\Models\Comment;
 class DeleteCommentService implements DeleteCommentInterface{
 
 
-      /**
-     * Delete a comment by its ID after checking user authorization.
-     *
-     * @param  int  $id The ID of the comment to delete.
-     * @return array An array containing a message and optionally data about the deleted comment.
-     *               Returns ['message' => 'Comment Deleted', 'data' => [...]] on success.
-     *               Returns ['message' => 'You Are Not Authorised To Delete This Comment', 'data' => null] if the user is not the owner.
-     *               Returns ['message' => 'Comment Not Found'] if the comment does not exist.
+
+    /**
+     * Summary of destroy
+     * @param mixed $id
+     * @return array{code: int, data: array{content: mixed, email: string, id: mixed, name: string, parent: mixed, title: mixed, message: string}|array{data: bool, message: string}|array{data: null, message: string}}
      */
     public function destroy($id)
     {
@@ -42,6 +39,7 @@ class DeleteCommentService implements DeleteCommentInterface{
             ? $comment->post->title
             : ($comment->parent && $comment->parent->post ? $comment->parent->post->title : null),
                     "content"=>$comment->body,
+                    'id' => $comment->id,
             "parent"=>$comment->parent? $comment->parent->body:"*",
            ];
 

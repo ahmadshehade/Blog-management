@@ -10,13 +10,12 @@ class AdminCreatePostService implements AdminCreatePostInterface
 {
 
 
-    /**
-     * Make a new post with the given request
-     *
-     * @param \App\Http\Requests\User\PostRequest $request
-     * @return array
-     */
 
+    /**
+     * Summary of makePost
+     * @param mixed $request
+     * @return array{code: int, data: array{URL: mixed, admin: string, body: mixed, category: mixed, editor_notes: mixed, email: string, id: mixed, is_featured: mixed, is_published: mixed, is_scheduled: mixed, keywords: mixed, meta_description: mixed, publish_date: mixed, slug: mixed, status: mixed, tags: mixed, title: mixed, message: string}|array{code: int, data: string, message: string}}
+     */
     public function makePost($request)
     {
         try {

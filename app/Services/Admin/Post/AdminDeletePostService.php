@@ -9,12 +9,12 @@ class AdminDeletePostService implements AdminDeletedPostInterface
 {
 
 
-    /**
-     * Delete post by id
-     * @param int $id
-     * @return array
-     */
 
+    /**
+     * Summary of deletePost
+     * @param mixed $id
+     * @return array{code: int, data: array{URL: mixed, body: mixed, category: mixed, editor_notes: mixed, email: mixed, id: mixed, is_featured: mixed, is_published: mixed, is_scheduled: mixed, keywords: mixed, meta_description: mixed, publish_date: mixed, slug: mixed, status: mixed, tags: mixed, title: mixed, user: mixed, message: string}|array{data: null, message: string}}
+     */
     public function deletePost($id)
     {
         $post = Post::find($id);

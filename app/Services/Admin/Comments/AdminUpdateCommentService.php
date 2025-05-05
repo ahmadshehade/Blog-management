@@ -8,19 +8,21 @@ use Illuminate\Support\Facades\DB;
 
 class AdminUpdateCommentService implements AdminUpdateCommentInterface{
 
+
     /**
      * Summary of updateComment
      * @param mixed $id
-     * @param \App\Http\Requests\User\CommentRequest $request
-     * @return array{data: array{content: mixed, email: mixed, name: mixed, parent: mixed, title: mixed, message: string}|array{data: bool, message: string,code:int}|array{data: string, message: string,code:int}}
+     * @param mixed $request
+     * @throws \Exception
+     * @return array{code: int, data: array{comment_id: mixed, content: mixed, email: mixed, name: mixed, parent: mixed, title: mixed, message: string}|array{code: int, data: string, message: string}|array{data: bool, message: string}}
      */
-
     public function updateComment($id, $request)
     {
 
 
         try{
             DB::beginTransaction();
+            $dataUpadted=$request->validated();
             $comment=Comment::find($id);
             if(!$comment){
                 return [
@@ -28,21 +30,20 @@ class AdminUpdateCommentService implements AdminUpdateCommentInterface{
                     'data'=>false
                 ];
             }
-                   $dataUpadted=$request->validated();
-                if( $comment->parent_id!=null){
-                       $comment->update($dataUpadted);
-                       unset($dataUpadted['parent_id']);
-                }else{
-                    $comment->update($dataUpadted);
-                }
-
-
+            if($comment->admin_id !=auth('admin')->user()->id){
+                throw new \Exception('You are not allowed to update this comment');
+            }
+            if($comment->post_id!=$dataUpadted["post_id"]){
+                throw new \Exception("Error! post_id is not match");
+              }
+            $comment->update($dataUpadted);
             $data=[
                 "name"=>$comment->user?$comment->user->name:$comment->admin->name,
                 "email"=>$comment->user?$comment->user->email:$comment->admin->email,
                  "title" => $comment->post
                 ? $comment->post->title
                 : ($comment->parent && $comment->parent->post ? $comment->parent->post->title : null),
+                "comment_id"=>$comment->id,
                 "content"=>$comment->body,
                 "parent"=>$comment->parent? $comment->parent->body:"*",
                ];

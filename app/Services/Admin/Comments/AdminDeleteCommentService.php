@@ -10,8 +10,8 @@ class AdminDeleteCommentService implements AdminDeleteCommentInterface
 
     /**
      * Summary of destroy
-     * @param int $id
-     * @return array{data: array{content: mixed, email: mixed, name: mixed, parent: mixed, title: mixed, message: string,code:int}|array{data: bool, message: string, code:int}}
+     * @param mixed $id
+     * @return array{code: int, data: array{comment_id: mixed, content: mixed, email: mixed, name: mixed, parent: mixed, title: mixed, message: string}|array{data: bool, message: string}}
      */
     public function destroy($id)
     {
@@ -28,6 +28,7 @@ class AdminDeleteCommentService implements AdminDeleteCommentInterface
         $data = [
             "name" => $comment->user ? $comment->user->name : $comment->admin->name,
             "email" => $comment->user ? $comment->user->email : $comment->admin->email,
+            "comment_id"=>$comment->id,
             "title" => $comment->post
                 ? $comment->post->title
                 : ($comment->parent && $comment->parent->post ? $comment->parent->post->title : null),

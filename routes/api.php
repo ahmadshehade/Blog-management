@@ -38,7 +38,7 @@ Route:: prefix('user')->middleware('auth:api')->group(function () {
     Route::put('update/comment/{id}',[CommentController::class,'update']);
 
     Route::delete('delete/comment/{id}',[CommentController::class,'destroy']);
-   
+
 
 
 

@@ -37,7 +37,7 @@ class CommentController extends Controller
     public function index()
     {
         $data = $this->listenComment->getAllComment();
-        return $this->successMessage($data['message'], $data['data'], $comment['code']);
+        return $this->successMessage($data['message'], $data['data'], $data['code']);
     }
 
     /**

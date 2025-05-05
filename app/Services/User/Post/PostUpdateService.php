@@ -12,22 +12,11 @@ class PostUpdateService implements PostUpdateInterface
 
 
     /**
-     * Updates a post with the given ID using the provided request data.
-     *
-     * Initiates a database transaction to update the post. If the post with the
-     * specified ID does not exist, it returns a "post not Found" message. After
-     * updating, it retrieves the updated post information and returns it along with
-     * a success message. If an exception occurs during the update process, it
-     * rolls back the transaction and returns the error message.
-     *
-     * @param int $id The ID of the post to be updated.
-     * @param \App\Http\Requests\User\PostRequest $request The request containing validated data
-     * for updating the post.
-     * @return array An array containing the updated post data and a message, or an
-     * error message if the update fails.
+     * Summary of updatePost
+     * @param mixed $id
+     * @param mixed $request
+     * @return array{code: int, data: array{URL: mixed, body: mixed, category: mixed, editor_notes: mixed, email: string, id: mixed, is_featured: mixed, is_published: mixed, is_scheduled: mixed, keywords: mixed, meta_description: mixed, publish_date: mixed, slug: mixed, status: mixed, tags: mixed, title: mixed, user: string, message: string}|array{code: int, data: string, message: string}|array{data: string, message: string}}
      */
-
-
     public function updatePost($id, $request)
     {
         try {

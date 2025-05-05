@@ -11,18 +11,10 @@ class PostCreateService implements PostCreateInterface
 
 
     /**
-     * Create a new post with the given request data.
-     *
-     * This function create a new post with the given request data and
-     * assign it to the user that make the request.
-     *
-     * @param \App\Http\Requests\User\PostRequest $request The input data for the post.
-     *
-     * @return array Return the data of the created post, and a message.
-     *
-     * @throws \Exception If there are any errors during the process.
+     * Summary of storePost
+     * @param mixed $request
+     * @return array{code: int, data: array{URL: mixed, body: mixed, category: mixed, editor_notes: mixed, email: string, id: mixed, is_featured: mixed, is_published: mixed, is_scheduled: mixed, keywords: mixed, meta_description: mixed, publish_date: mixed, slug: mixed, status: mixed, tags: mixed, title: mixed, user: string, message: string}|array{code: int, data: string, message: string}}
      */
-
     public function storePost($request)
     {
         try {

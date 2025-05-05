@@ -12,9 +12,10 @@ class AdminListenCommentService implements AdminListenCommentInterface
 {
     use GetReplayTrait;
 
+
     /**
      * Summary of getAllComment
-     * @return array{data: array, message: string|array{data: bool, message: string,code:int}}
+     * @return array{code: int, data: array, message: string|array{code: int, data: bool, message: string}}
      */
     public function getAllComment()
     {
@@ -52,12 +53,12 @@ class AdminListenCommentService implements AdminListenCommentInterface
 
 
 
+
     /**
      * Summary of getPostComments
-     * @param int $id
-     * @return array{data: array, message: string|array{data: bool, message: string, code: int}}
+     * @param mixed $id
+     * @return array{code: int, data: array, message: string|array{code: int, data: bool, message: string}|array{code: int, error: string, message: string}|array{data: bool, message: string}}
      */
-
     public function getPostComments($id)
     {
        try{
@@ -68,7 +69,7 @@ class AdminListenCommentService implements AdminListenCommentInterface
                    'data'=>false,
                ];
            }
-           $comments=$post->comments;
+           $comments=$post->comments->where('parent_id',null);
 
            if($comments->count()>0){
                $data=[];

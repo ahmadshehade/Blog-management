@@ -10,21 +10,13 @@ class AdminUpdatePostService implements AdminUpdatedPostInterface
 {
 
 
+
     /**
-     * Updates the published status of a specific post.
-     *
-     * This function attempts to find a post by its ID and update its published status
-     * using the data provided in the request. If the post is found and updated successfully,
-     * it commits the transaction and returns the updated post data along with a success message.
-     * If the post is not found, it returns a "Post Not Found" message. In case of any errors during
-     * the update process, it rolls back the transaction and returns the error message.
-     *
-     * @param int $id The ID of the post to update.
-     * @param \App\Http\Requests\User\PostRequest $request The request containing the data to update the post.
-     * @return array An associative array containing the message and data of the operation.
+     * Summary of changePublished
+     * @param mixed $id
+     * @param mixed $request
+     * @return array{code: int, data: array{URL: mixed, body: mixed, category: mixed, editor_notes: mixed, email: string, id: mixed, is_featured: mixed, is_published: mixed, is_scheduled: mixed, keywords: mixed, meta_description: mixed, publish_date: mixed, slug: mixed, status: mixed, tags: mixed, title: mixed, user: string, message: string}|array{code: int, data: string, message: string}|array{data: null, message: string}}
      */
-
-
     public function changePublished($id, $request)
     {
         try {
